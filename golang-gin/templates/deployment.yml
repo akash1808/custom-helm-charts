@@ -31,6 +31,11 @@ spec:
           - name: {{  .Values.app.name }}-goconfig
             mountPath: /config.toml
             subPath: config.toml
+          - name: {{  .Values.app.name }}-goconfigreact
+            mountPath: /views/public/config.js
+            subPath: config.js
+
+
       - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:1.12
         command: [
@@ -49,5 +54,8 @@ spec:
       - name:  {{  .Values.app.name }}-goconfig
         configMap:
           name:  {{  .Values.app.fullname }}-config
+      - name:  {{  .Values.app.name }}-goconfigreact
+        configMap:
+          name:  {{  .Values.app.fullname }}-reactconfig
       imagePullSecrets:
       - name: {{ .Values.imagepullsecret }}

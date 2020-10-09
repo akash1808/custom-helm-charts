@@ -8,7 +8,7 @@ image:
   repository: asia.gcr.io/gcp-akash-287109/golang-gin
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "618ac8f-develop"
+  tag: "b8568dc-develop"
 
 imagepullsecret: registrypullsecret
 nameOverride: ""
@@ -20,7 +20,8 @@ app:
  name: go
  chart: chart-go
 
-
+url:
+  endpoint1: http://13.235.39.98:8080
 
 mysql:
   url: "localhost:3306"
