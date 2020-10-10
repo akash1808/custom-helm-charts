@@ -9,5 +9,5 @@ metadata:
     release: {{ .Release.Name }}
 data:
   config.js: |
-    var Configs = { APP_URL : "{{ .Values.url.endpoint1 }}",prop2 : "123"}
+          var Configs = { APP_URL : "{{ .Values.url.endpoint1 }}",APP_LIKE_URL: "{{ .Values.url.endpoint2 }}",prop2 : "123"}
 

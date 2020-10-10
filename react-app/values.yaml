@@ -5,10 +5,10 @@
 replicacount: 1
 
 image:
-  repository: asia.gcr.io/gcp-akash-287109/golang-gin
+  repository: asia.gcr.io/gcp-akash-287109/react-app
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "b8568dc-develop"
+  tag: "ee5cb94-develop"
 
 imagepullsecret: registrypullsecret
 nameOverride: ""
@@ -16,25 +16,14 @@ fullnameOverride: ""
 
 
 app:
- fullname: app1-go
- name: go
+ fullname: react-app-go
+ name: react
  chart: chart-go
 
 url:
-  endpoint1: http://13.235.39.98:8080
+  endpoint1: http://104.196.53.80:8080
+  endpoint2: http://104.196.28.2:8080
 
-mysql:
-  url: "localhost:3306"
-  database: "default"
-  username: "default"
-  password: "01954ff0c478404c"
-  network: "tcp"
-
-redis:
-  address: "10.25.0.4:6379"
-
-cloudsql:
-  instance_name: "gcp-akash-287109:us-east1:checi2k-7d13"
 
 expose:
   port: 8080

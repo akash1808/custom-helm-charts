@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.fullname }}-deploymen
+  labels:
+    app: {{ .Values.app.name  }}
+    chart: {{ .Values.app.chart  }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicacount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name  }}
+      chart: {{ .Values.app.chart  }}
+      heritage: {{ .Release.Service }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      name: {{ .Values.app.fullname }}-pod
+      labels:
+        app: {{ .Values.app.name  }}
+        chart: {{ .Values.app.chart  }}
+        heritage: {{ .Release.Service }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Values.app.fullname }}-container
+        image: {{ .Values.image.repository }}:{{.Values.image.tag}}
+        volumeMounts:
+          - name: {{  .Values.app.name }}-goconfig
+            mountPath: /config.toml
+            subPath: config.toml
+
+
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.12
+        command: [
+            "/cloud_sql_proxy",
+            "-instances={{.Values.cloudsql.instance_name }}=tcp:3306",
+           ]
+
+        resources:
+          requests:
+            cpu: 5m
+            memory: 16M
+          limits:
+            cpu: 500m
+            memory: 64M
+      volumes:
+      - name:  {{  .Values.app.name }}-goconfig
+        configMap:
+          name:  {{  .Values.app.fullname }}-config
+      imagePullSecrets:
+      - name: {{ .Values.imagepullsecret }}

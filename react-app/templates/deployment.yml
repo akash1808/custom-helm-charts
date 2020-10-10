@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.fullname }}-deploymen
+  labels:
+    app: {{ .Values.app.name  }}
+    chart: {{ .Values.app.chart  }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicacount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name  }}
+      chart: {{ .Values.app.chart  }}
+      heritage: {{ .Release.Service }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      name: {{ .Values.app.fullname }}-pod
+      labels:
+        app: {{ .Values.app.name  }}
+        chart: {{ .Values.app.chart  }}
+        heritage: {{ .Release.Service }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Values.app.fullname }}-container
+        image: {{ .Values.image.repository }}:{{.Values.image.tag}}
+        volumeMounts:
+          - name: {{  .Values.app.name }}-goconfigreact
+            mountPath: /views/public/config.js
+            subPath: config.js
+
+
+      volumes:
+      - name:  {{  .Values.app.name }}-goconfigreact
+        configMap:
+          name:  {{  .Values.app.fullname }}-reactconfig
+      imagePullSecrets:
+      - name: {{ .Values.imagepullsecret }}

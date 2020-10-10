@@ -1,0 +1,39 @@
+# Default values for golang-gin.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicacount: 1
+
+image:
+  repository: asia.gcr.io/gcp-akash-287109/golang-like-service
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "af22c8a-develop"
+
+imagepullsecret: registrypullsecret
+nameOverride: ""
+fullnameOverride: ""
+
+
+app:
+ fullname: like-service--go
+ name: like-service
+ chart: chart-go
+
+
+mysql:
+  url: "localhost:3306"
+  database: "default"
+  username: "default"
+  password: "01954ff0c478404c"
+  network: "tcp"
+
+redis:
+  address: "10.25.0.4:6379"
+
+cloudsql:
+  instance_name: "gcp-akash-287109:us-east1:checi2k-7d13"
+
+expose:
+  port: 8080
+  protocol: TCP
